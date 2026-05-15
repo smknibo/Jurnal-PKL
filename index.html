@@ -3,15 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jurnal Pembekalan PKL – Tata Kamera & Tata Cahaya | 3 Kelompok</title>
-
-  <!-- Tailwind CSS via CDN -->
+  <title>Jurnal Pembekalan PKL – Tata Kamera & Tata Cahaya</title>
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- jsPDF & jsPDF-AutoTable -->
   <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.5.28/dist/jspdf.plugin.autotable.min.js"></script>
-
   <style>
     html, body {
       background: radial-gradient(800px 400px at 10% 10%, #0b1b2b 0%, #03060a 60%);
@@ -32,24 +27,15 @@
       background: rgba(0,0,0,0.7); justify-content: center; align-items: center; z-index: 50;
     }
     .modal.active { display: flex; }
-    .group-badge {
-      font-size: 0.6rem;
-      background: rgba(0,0,0,0.5);
-      border-radius: 20px;
-      padding: 2px 6px;
-      margin-top: 4px;
-      display: inline-block;
-    }
   </style>
 </head>
 <body class="min-h-screen p-4 md:p-8">
 
-  <!-- Modal Edit Peserta (dengan format Nama|Kelompok) -->
+  <!-- Modal Edit Peserta -->
   <div id="modalPeserta" class="modal">
     <div class="bg-gray-900 p-6 rounded-xl max-w-lg w-full border border-white/10">
       <h3 class="text-lg font-semibold mb-3">Edit Daftar Peserta</h3>
-      <p class="text-xs text-gray-400 mb-2">Format: <strong>Nama Lengkap|Kelompok</strong> (contoh: AGNESIA SAREN SAYAN|BCF-01)</p>
-      <textarea id="pesertaTextarea" rows="12" class="w-full px-3 py-2 rounded-md bg-gray-800 border border-white/10 text-white text-sm font-mono"></textarea>
+      <textarea id="pesertaTextarea" rows="12" class="w-full px-3 py-2 rounded-md bg-gray-800 border border-white/10 text-white text-sm"></textarea>
       <div class="flex justify-end gap-3 mt-4">
         <button id="btnBatalPeserta" class="px-4 py-2 rounded-lg bg-white/10 text-white">Batal</button>
         <button id="btnSimpanPeserta" class="px-4 py-2 rounded-lg bg-amber-400 text-black font-semibold">Simpan</button>
@@ -62,7 +48,6 @@
       <div>
         <h1 class="text-2xl font-extrabold">Jurnal Pembekalan PKL – Deep Learning</h1>
         <p class="text-sm text-gray-300 mt-1">SMK NEGERI ILE BOLENG • Materi Teknis Tata Kamera & Tata Cahaya</p>
-        <p class="text-xs text-amber-300 mt-1">📌 3 Kelompok: BCF-01, BCF-02, BFC-03</p>
       </div>
       <div class="text-right text-xs text-gray-400">
         <div>Offline-ready • Simpan, Cetak, Ekspor</div>
@@ -73,12 +58,55 @@
     <section class="glass p-4 rounded-xl mb-6">
       <h2 class="font-semibold mb-3">A. Metadata Sesi</h2>
       <div class="grid gap-3 meta-grid">
-        <div><label class="text-xs text-gray-300">Tanggal</label><input id="tgl" type="date" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" /></div>
-        <div><label class="text-xs text-gray-300">Sesi ke‑</label><select id="sesi" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white"><option value="">-- Pilih --</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></div>
-        <div><label class="text-xs text-gray-300">Jam Ke‑</label><input id="jam" type="text" placeholder="Contoh: 1-4" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" /></div>
-        <div><label class="text-xs text-gray-300">Ruang</label><select id="ruang" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white"><option>Ruang Kelas</option><option>Ruang Studio</option><option>Ruang Lab</option><option>Ruang Perpustakaan</option><option>Aula</option><option>Outdoor</option><option>Online (Zoom)</option></select></div>
-        <div><label class="text-xs text-gray-300">Instruktur / Pemateri</label><select id="instruktur" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white"><option value="">-- Pilih --</option><option>Fransiskus Kia Ose</option><option>Fransiskus Kia Pati</option><option>Primus Kia Saya</option><option>Velisitas Eva Deran Ola</option><option>Maria Ester Tuto Hidaf</option><option>Hironimus E. S. Boli</option><option>Veronika Hingi Libur</option></select></div>
-        <div class="col-span-full md:col-span-2"><label class="text-xs text-gray-300">Topik / Materi</label><select id="topik" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white"></select></div>
+        <div>
+          <label class="text-xs text-gray-300">Tanggal</label>
+          <input id="tgl" type="date" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-300">Sesi ke‑</label>
+          <select id="sesi" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
+            <option value="">-- Pilih --</option>
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-300">Jam Ke‑</label>
+          <input id="jam" type="text" placeholder="Contoh: 1-4" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" />
+        </div>
+        <div>
+          <label class="text-xs text-gray-300">Ruang</label>
+          <select id="ruang" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
+            <option>Ruang Kelas</option><option>Ruang Studio</option><option>Ruang Lab</option><option>Aula</option><option>Outdoor</option><option>Online (Zoom)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs text-gray-300">Instruktur / Pemateri</label>
+          <select id="instruktur" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
+            <option value="">-- Pilih --</option>
+            <option>Fransiskus Kia Ose</option>
+            <option>Fransiskus Kia Pati</option>
+            <option>Primus Kia Saya</option>
+            <option>Velisitas Eva Deran Ola</option>
+            <option>Maria Ester Tuto Hidaf</option>
+          </select>
+        </div>
+        <!-- Dropdown Kelompok dengan SEMUA -->
+        <div>
+          <label class="text-xs text-gray-300">Kelompok</label>
+          <select id="kelompok" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
+            <option value="">-- Pilih --</option>
+            <option>BCF-01</option>
+            <option>BCF-02</option>
+            <option>BCF-03</option>
+            <option>SEMUA</option>
+          </select>
+        </div>
+        <div class="col-span-full md:col-span-2">
+          <label class="text-xs text-gray-300">Topik / Materi</label>
+          <select id="topik" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
+            <!-- diisi JS -->
+          </select>
+        </div>
       </div>
     </section>
 
@@ -91,7 +119,7 @@
       <div><div class="text-sm font-medium mb-2">💡 Lighting yang Digunakan</div><div id="chips-lighting" class="flex flex-wrap gap-2"></div></div>
     </section>
 
-    <!-- SECTION C: Daftar Peserta (dengan kelompok) -->
+    <!-- SECTION C: Daftar Peserta -->
     <section class="glass p-4 rounded-xl mb-6">
       <div class="flex items-center justify-between mb-3">
         <h2 class="font-semibold">C. Daftar Peserta</h2>
@@ -127,7 +155,7 @@
 
   <script>
     (function() {
-      // ================= KONFIGURASI DASAR =================
+      // Konfigurasi
       const TOPIK_SESI = [
         "Sesi 1: Pembekalan Umum (K3, Etika, Komunikasi)",
         "Sesi 2: Dasar Operasi Kamera DSLR/Mirrorless",
@@ -143,14 +171,43 @@
       const STATUS_LABEL = ["Hadir","Sakit","Izin","Alfa"];
       const STATUS_COLORS = ["bg-emerald-600","bg-yellow-500","bg-sky-600","bg-red-600"];
       const STORAGE_KEY = 'pkl_sessions';
-      const PESERTA_KEY = 'pkl_peserta_master'; // menyimpan array {name, group}
+      const PESERTA_KEY = 'pkl_peserta_master';
 
-      // DOM elements
+      // Data anggota per kelompok
+      const KELOMPOK_DATA = {
+        "BCF-01": [
+          "AGNESIA SAREN SAYAN", "AGUSTINUS SILI BEDA", "AHMAD SAPUTRA", "ASMAWATI ABUBAKAR",
+          "BRENDENIUS DASI DEMON MUDA MAKIN", "DIDIMUS LESU BOLEN", "EMANUEL ELITZER",
+          "FABRICIO LORENZO BAHY", "FITRI RAHMAN", "FITRIANI TUTO"
+        ],
+        "BCF-02": [
+          "ILMA RAMDANIA", "JULIANUS PHILIPUS AMA TUPEN ABA", "JURIAH LATIF",
+          "MARIA NEZAVANERSI TOKAN", "MARSELINA", "MARTINUS BURA SUBAN RAYA MUDAMAKIN",
+          "MARTINUS PATI WATOWUAN", "MELKIDIMUS DEAGUSTI ATAMUKIN", "NURKAINI S. DORA",
+          "NURYASIN AMIR HUDZAIVAN"
+        ],
+        "BCF-03": [
+          "OKTAVIANUS KOPONG MITEN", "ROMANRIO GELEUK OLA", "SELVIANA SURA BELIDO",
+          "SIPRIANUS SINA SADA LAMANELE", "SYAHARANI CB", "TARSISIUS SILI TUPEN",
+          "THERESIA VELICIA PUTRI KEDANG", "WULANRAMADHANI KEWA LELA",
+          "YOHANES RAYA MUDA MAKIN", "YOSEP PAYONG", "ZAKARIAS F. ORON TEWA"
+        ]
+      };
+
+      // Gabungan semua peserta untuk opsi "SEMUA"
+      const SEMUA_PESERTA = [
+        ...KELOMPOK_DATA["BCF-01"],
+        ...KELOMPOK_DATA["BCF-02"],
+        ...KELOMPOK_DATA["BCF-03"]
+      ];
+
+      // DOM
       const tglEl = document.getElementById('tgl');
       const sesiEl = document.getElementById('sesi');
       const jamEl = document.getElementById('jam');
       const ruangEl = document.getElementById('ruang');
       const instrukturEl = document.getElementById('instruktur');
+      const kelompokEl = document.getElementById('kelompok');
       const topikEl = document.getElementById('topik');
       const chipsMetode = document.getElementById('chips-metode');
       const chipsProfil = document.getElementById('chips-profil');
@@ -181,125 +238,30 @@
       const selectedProfiles = new Set();
       const selectedCameras = new Set();
       const selectedLightings = new Set();
-      let students = []; // array of { name, group, status }
+      let students = [];
 
       const pad = n => String(n).padStart(2,'0');
       const today = new Date();
       tglEl.value = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
 
-      // ============= DATA MASTER PESERTA (3 KELOMPOK) =============
-      function getDefaultParticipants() {
-        // Data berdasarkan 3 kelompok yang diberikan
-        const group1 = [
-          "AGNESIA SAREN SAYAN","AGUSTINUS SILI BEDA","AHMAD SAPUTRA","ASMAWATI ABUBAKAR","BRENDENIUS DASI DEMON MUDA MAKIN",
-          "DIDIMUS LESU BOLEN","EMANUEL ELITZER","FABRICIO LORENZO BAHY","FITRI RAHMAN","FITRIANI TUTO"
-        ];
-        const group2 = [
-          "ILMA RAMDANIA","JULIANUS PHILIPUS AMA TUPEN ABA","JURIAH LATIF","MARIA NEZAVANERSI TOKAN","MARSELINA",
-          "MARTINUS BURA SUBAN RAYA MUDAMAKIN","MARTINUS PATI WATOWUAN","MELKIDIMUS DEAGUSTI ATAMUKIN","NURKAINI S. DORA","NURYASIN AMIR HUDZAIVAN"
-        ];
-        const group3 = [
-          "OKTAVIANUS KOPONG MITEN","ROMANRIO GELEUK OLA","SELVIANA SURA BELIDO","SIPRIANUS SINA SADA LAMANELE","SYAHARANI CB",
-          "TARSISIUS SILI TUPEN","THERESIA VELICIA PUTRI KEDANG","WULANRAMADHANI KEWA LELA","YOHANES RAYA MUDA MAKIN","YOSEP PAYONG",
-          "ZAKARIAS F. ORON TEWA"
-        ];
-        let participants = [];
-        group1.forEach(name => participants.push({ name, group: "BCF-01" }));
-        group2.forEach(name => participants.push({ name, group: "BCF-02" }));
-        group3.forEach(name => participants.push({ name, group: "BFC-03" }));
-        return participants;
-      }
-
-      function getMasterPeserta() {
-        const saved = localStorage.getItem(PESERTA_KEY);
-        if (saved) {
-          try {
-            let parsed = JSON.parse(saved);
-            if (Array.isArray(parsed) && parsed.length && parsed[0].hasOwnProperty('name')) return parsed;
-          } catch(e) {}
+      // Fungsi set students berdasarkan pilihan kelompok
+      function setStudentsByKelompok(kel) {
+        if (kel === "SEMUA") {
+          students = SEMUA_PESERTA.map(name => ({ name, status: 0 }));
+        } else if (KELOMPOK_DATA[kel]) {
+          students = KELOMPOK_DATA[kel].map(name => ({ name, status: 0 }));
+        } else {
+          students = []; // tidak pilih atau kosong
         }
-        return getDefaultParticipants();
-      }
-
-      function saveMasterPeserta(arr) {
-        localStorage.setItem(PESERTA_KEY, JSON.stringify(arr));
-      }
-
-      // Inisialisasi students dari master (status default 0 = Hadir)
-      function initStudentsFromMaster() {
-        const master = getMasterPeserta();
-        students = master.map(p => ({
-          name: p.name,
-          group: p.group,
-          status: 0
-        }));
-      }
-
-      // Render grid peserta dengan badge kelompok
-      function renderStudents() {
-        studentsGrid.innerHTML = '';
-        students.forEach(s => {
-          const btn = document.createElement('button');
-          btn.className = `student-chip text-xs p-2 rounded-md text-white/95 ${STATUS_COLORS[s.status]} flex flex-col items-center justify-center`;
-          btn.style.minHeight = '64px';
-          btn.innerHTML = `<div class="whitespace-normal text-center font-medium">${s.name}</div>
-                           <div class="group-badge text-[10px] mt-1 bg-black/40 px-2 py-0.5 rounded-full">${s.group}</div>`;
-          btn.type = 'button';
-          btn.addEventListener('click', () => {
-            s.status = (s.status + 1) % 4;
-            renderStudents();
-            updateCounts();
-          });
-          studentsGrid.appendChild(btn);
-        });
+        renderStudents();
         updateCounts();
       }
 
-      function updateCounts() {
-        let hadir=0, sakit=0, izin=0, alfa=0;
-        students.forEach(s => { if(s.status===0) hadir++; else if(s.status===1) sakit++; else if(s.status===2) izin++; else if(s.status===3) alfa++; });
-        cHadir.textContent = hadir;
-        cSakit.textContent = sakit;
-        cIzin.textContent = izin;
-        cAlfa.textContent = alfa;
-        return { hadir, sakit, izin, alfa };
+      function renderTopikDropdown() {
+        topikEl.innerHTML = '';
+        TOPIK_SESI.forEach(t => { const opt = document.createElement('option'); opt.value = t; opt.textContent = t; topikEl.appendChild(opt); });
       }
 
-      // ============= FITUR EDIT PESERTA DENGAN FORMAT NAMA|KELOMPOK =============
-      function showModalPeserta() {
-        // Tampilkan setiap baris: Nama|Kelompok
-        const lines = students.map(s => `${s.name}|${s.group}`).join('\n');
-        pesertaTextarea.value = lines;
-        modalPeserta.classList.add('active');
-      }
-
-      function hideModalPeserta() { modalPeserta.classList.remove('active'); }
-
-      function handleSimpanPeserta() {
-        const raw = pesertaTextarea.value;
-        const lines = raw.split(/\r?\n/).filter(l => l.trim().length > 0);
-        if (lines.length === 0) { alert("Minimal satu peserta."); return; }
-        const newParticipants = [];
-        for (let line of lines) {
-          let [name, group] = line.split('|');
-          if (!name) continue;
-          name = name.trim();
-          group = group ? group.trim() : "BCF-01"; // default kelompok jika tidak diisi
-          if (name) newParticipants.push({ name, group });
-        }
-        if (newParticipants.length === 0) return;
-        saveMasterPeserta(newParticipants);
-        initStudentsFromMaster();
-        renderStudents();
-        hideModalPeserta();
-      }
-
-      btnEditPeserta.addEventListener('click', showModalPeserta);
-      btnSimpanPeserta.addEventListener('click', handleSimpanPeserta);
-      btnBatalPeserta.addEventListener('click', hideModalPeserta);
-      window.addEventListener('click', e => { if(e.target===modalPeserta) hideModalPeserta(); });
-
-      // ============= INDIKATOR CHIPS =============
       function createChip(label, container, setRef, baseColor) {
         const btn = document.createElement('button');
         btn.className = `chip px-3 py-1 text-xs rounded-full ${baseColor} text-white/90`;
@@ -319,20 +281,57 @@
         LIGHTINGS.forEach(l => createChip(l, chipsLighting, selectedLightings, 'bg-yellow-600/80'));
       }
 
-      // ============= TOPIK DROPDOWN =============
-      function renderTopikDropdown() {
-        topikEl.innerHTML = '';
-        TOPIK_SESI.forEach(t => { const opt = document.createElement('option'); opt.value = t; opt.textContent = t; topikEl.appendChild(opt); });
+      function renderStudents() {
+        studentsGrid.innerHTML = '';
+        students.forEach(s => {
+          const btn = document.createElement('button');
+          btn.className = `student-chip text-xs p-2 rounded-md text-white/95 ${STATUS_COLORS[s.status]} flex items-center justify-center`;
+          btn.style.minHeight = '44px'; btn.innerHTML = `<div class="whitespace-normal text-center">${s.name}</div>`; btn.type = 'button';
+          btn.addEventListener('click', () => { s.status = (s.status + 1) % 4; renderStudents(); updateCounts(); });
+          studentsGrid.appendChild(btn);
+        });
       }
 
-      // ============= SESSION CRUD =============
+      function updateCounts() {
+        let hadir=0, sakit=0, izin=0, alfa=0;
+        students.forEach(s => { if(s.status===0)hadir++; else if(s.status===1)sakit++; else if(s.status===2)izin++; else if(s.status===3)alfa++; });
+        cHadir.textContent = hadir; cSakit.textContent = sakit; cIzin.textContent = izin; cAlfa.textContent = alfa;
+        return { hadir, sakit, izin, alfa };
+      }
+
+      // Modal edit peserta
+      function showModalPeserta() {
+        pesertaTextarea.value = students.map(s=>s.name).join('\n');
+        modalPeserta.classList.add('active');
+      }
+      function hideModalPeserta() { modalPeserta.classList.remove('active'); }
+      function handleSimpanPeserta() {
+        const lines = pesertaTextarea.value.split('\n').map(l=>l.trim()).filter(l=>l);
+        if(!lines.length){ alert('Minimal satu peserta.'); return; }
+        students = lines.map(name=>({name, status:0}));
+        renderStudents();
+        updateCounts();
+        hideModalPeserta();
+      }
+      btnEditPeserta.addEventListener('click', showModalPeserta);
+      btnSimpanPeserta.addEventListener('click', handleSimpanPeserta);
+      btnBatalPeserta.addEventListener('click', hideModalPeserta);
+      window.addEventListener('click', e => { if(e.target===modalPeserta) hideModalPeserta(); });
+
+      // Event dropdown kelompok
+      kelompokEl.addEventListener('change', function() {
+        setStudentsByKelompok(this.value);
+      });
+
+      // Riwayat
       function saveCurrentSession() {
         if(!tglEl.value || !sesiEl.value){ alert('Isi tanggal dan sesi.'); return; }
         const session = {
           tgl: tglEl.value, sesi: sesiEl.value, topik: topikEl.value, jam: jamEl.value, ruang: ruangEl.value,
-          instruktur: instrukturEl.value, metode: Array.from(selectedMethods), profil: Array.from(selectedProfiles),
+          instruktur: instrukturEl.value, kelompok: kelompokEl.value,
+          metode: Array.from(selectedMethods), profil: Array.from(selectedProfiles),
           cameras: Array.from(selectedCameras), lightings: Array.from(selectedLightings),
-          students: students.map(s => ({ name: s.name, group: s.group, status: s.status })),
+          students: students.map(s=>({name:s.name, status:s.status})),
           gear: gearEl.value, uraian: uraianEl.value
         };
         let sessions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
@@ -346,7 +345,9 @@
 
       function loadSessionToForm(session) {
         tglEl.value = session.tgl||''; sesiEl.value = session.sesi||''; topikEl.value = session.topik||'';
-        jamEl.value = session.jam||''; ruangEl.value = session.ruang||''; instrukturEl.value = session.instruktur||'';
+        jamEl.value = session.jam||''; ruangEl.value = session.ruang||'';
+        instrukturEl.value = session.instruktur||'';
+        kelompokEl.value = session.kelompok||'';
         selectedMethods.clear(); selectedProfiles.clear(); selectedCameras.clear(); selectedLightings.clear();
         (session.metode||[]).forEach(m=>selectedMethods.add(m));
         (session.profil||[]).forEach(p=>selectedProfiles.add(p));
@@ -364,13 +365,17 @@
         highlight(selectedProfiles, chipsProfil, 'bg-green-600/80');
         highlight(selectedCameras, chipsCamera, 'bg-purple-600/80');
         highlight(selectedLightings, chipsLighting, 'bg-yellow-600/80');
-        if(session.students && session.students.length){
-          students = session.students.map(s => ({ name: s.name, group: s.group, status: s.status }));
+
+        // Set students dari data sesi (bukan dari KELOMPOK_DATA)
+        if(session.students && session.students.length) {
+          students = session.students.map(s=>({name:s.name, status:s.status}));
         } else {
-          initStudentsFromMaster();
+          students = [];
         }
         renderStudents();
-        gearEl.value = session.gear||''; uraianEl.value = session.uraian||'';
+        updateCounts();
+        gearEl.value = session.gear||'';
+        uraianEl.value = session.uraian||'';
       }
 
       function renderHistory() {
@@ -379,7 +384,14 @@
         let html='<ul class="space-y-1">';
         sessions.forEach((s,i)=>{
           const dateStr = new Date(s.tgl+'T00:00:00').toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
-          html += `<li class="flex items-center justify-between bg-white/5 p-2 rounded"><span><strong>${dateStr}</strong> - Sesi ${s.sesi}: ${s.topik||'-'}</span><span class="flex gap-2"><button class="text-xs px-2 py-1 bg-white/10 rounded load-session" data-index="${i}">Muat</button><button class="text-xs px-2 py-1 bg-white/10 rounded print-session" data-index="${i}">Cetak</button><button class="text-xs px-2 py-1 bg-red-600/30 rounded delete-session" data-index="${i}">Hapus</button></span></li>`;
+          html += `<li class="flex items-center justify-between bg-white/5 p-2 rounded">
+            <span><strong>${dateStr}</strong> - Sesi ${s.sesi}: ${s.topik||'-'} (${s.kelompok||'-'})</span>
+            <span class="flex gap-2">
+              <button class="text-xs px-2 py-1 bg-white/10 rounded load-session" data-index="${i}">Muat</button>
+              <button class="text-xs px-2 py-1 bg-white/10 rounded print-session" data-index="${i}">Cetak</button>
+              <button class="text-xs px-2 py-1 bg-red-600/30 rounded delete-session" data-index="${i}">Hapus</button>
+            </span>
+          </li>`;
         });
         html+='</ul>'; historyDiv.innerHTML=html;
         historyDiv.querySelectorAll('.load-session').forEach(b=>b.addEventListener('click',e=>{const i=parseInt(e.target.dataset.index); const s=loadSessions(); if(s[i])loadSessionToForm(s[i]); }));
@@ -387,7 +399,7 @@
         historyDiv.querySelectorAll('.delete-session').forEach(b=>b.addEventListener('click',e=>{if(!confirm('Hapus sesi ini?'))return; const i=parseInt(e.target.dataset.index); let s=loadSessions(); s.splice(i,1); localStorage.setItem(STORAGE_KEY,JSON.stringify(s)); renderHistory(); }));
       }
 
-      // ============= EKSPOR CSV =============
+      // Ekspor CSV
       function exportSessionsToCSV() {
         let sessions = [];
         try {
@@ -396,11 +408,12 @@
           if(!Array.isArray(sessions)) sessions = [];
         } catch(e) { alert('Gagal membaca data.'); return; }
         if(!sessions.length){ alert('Belum ada sesi tersimpan.'); return; }
-        const headers = ['Tanggal','Sesi','Topik','Jam','Ruang','Instruktur','Metode','Kompetensi','Kamera','Lighting','Gear Tambahan','Uraian','Hadir','Sakit','Izin','Alfa'];
+
+        const headers = ['Tanggal','Sesi','Topik','Jam','Ruang','Instruktur','Kelompok','Metode','Kompetensi','Kamera','Lighting','Gear Tambahan','Uraian','Hadir','Sakit','Izin','Alfa'];
         const rows = sessions.map(s => {
           const cnt = {hadir:0,sakit:0,izin:0,alfa:0};
           if(s.students) s.students.forEach(st=>{ if(st.status===0)cnt.hadir++; else if(st.status===1)cnt.sakit++; else if(st.status===2)cnt.izin++; else if(st.status===3)cnt.alfa++; });
-          return [s.tgl||'', s.sesi||'', s.topik||'', s.jam||'', s.ruang||'', s.instruktur||'', (s.metode||[]).join('; '), (s.profil||[]).join('; '), (s.cameras||[]).join('; '), (s.lightings||[]).join('; '), s.gear||'', s.uraian||'', cnt.hadir, cnt.sakit, cnt.izin, cnt.alfa];
+          return [s.tgl||'', s.sesi||'', s.topik||'', s.jam||'', s.ruang||'', s.instruktur||'', s.kelompok||'', (s.metode||[]).join('; '), (s.profil||[]).join('; '), (s.cameras||[]).join('; '), (s.lightings||[]).join('; '), s.gear||'', s.uraian||'', cnt.hadir, cnt.sakit, cnt.izin, cnt.alfa];
         });
         const escapeCSV = v => { if(v===null||v===undefined)return''; v=String(v); if(v.includes(',')||v.includes('"')||v.includes('\n')) return '"'+v.replace(/"/g,'""')+'"'; return v; };
         const csv = '\uFEFF' + [headers.join(','), ...rows.map(r=>r.map(escapeCSV).join(','))].join('\n');
@@ -413,7 +426,7 @@
       }
       exportBtn.addEventListener('click', exportSessionsToCSV);
 
-      // ============= PDF GENERATION (sama seperti sebelumnya, tapi dengan info kelompok?) =============
+      // PDF Generation
       const { jsPDF } = window.jspdf;
       function formatDisplayDate(iso) {
         if(!iso) return '-';
@@ -423,74 +436,101 @@
 
       function generatePDF() {
         if(!tglEl.value){ alert('Tanggal wajib diisi.'); return; }
+
         const sesiVal = sesiEl.value || '-';
         const topikVal = topikEl.value || '-';
         const instrukturVal = instrukturEl.value || '___________';
         const jamVal = jamEl.value || '-';
         const ruangVal = ruangEl.value || '-';
+        const kelompokVal = kelompokEl.value || '-';
         const counts = updateCounts();
         const metodeStr = Array.from(selectedMethods).join(', ') || '-';
         const cameraStr = Array.from(selectedCameras).join(', ');
         const lightingStr = Array.from(selectedLightings).join(', ');
         const gearTambahan = gearEl.value.trim();
         const uraianStr = uraianEl.value.trim() || '-';
+
         const doc = new jsPDF({ unit:'pt', format:'a4' });
         const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
         const margin = 36;
+        const font = 'helvetica';
         let y = 36;
-        doc.setFont('helvetica','normal').setFontSize(10).setTextColor(0,0,0);
+
+        // Kop
+        doc.setFont(font,'normal').setFontSize(10).setTextColor(0,0,0);
         doc.text("PEMERINTAH PROVINSI NUSA TENGGARA TIMUR", pageWidth/2, y, {align:'center'}); y += 14;
         doc.text("DINAS PENDIDIKAN DAN KEBUDAYAAN", pageWidth/2, y, {align:'center'}); y += 18;
-        doc.setFont('helvetica','bold').setFontSize(14);
+        doc.setFont(font,'bold').setFontSize(14);
         doc.text("SMK NEGERI ILE BOLENG", pageWidth/2, y, {align:'center'}); y += 18;
-        doc.setFont('helvetica','normal').setFontSize(9);
+        doc.setFont(font,'normal').setFontSize(9);
         doc.text("Jl. Anggrek No. 07, Desa Lewopao, Kec. Ile Boleng", pageWidth/2, y, {align:'center'}); y += 12;
         doc.text("NPSN: 50306154 | Terakreditasi B", pageWidth/2, y, {align:'center'}); y += 10;
         y += 8;
         doc.setLineWidth(1.2).line(margin, y, pageWidth - margin, y); y += 4;
         doc.setLineWidth(0.6).line(margin, y, pageWidth - margin, y); y += 18;
-        doc.setFont('helvetica','bold').setFontSize(14);
+
+        // Judul
+        doc.setFont(font,'bold').setFontSize(14);
         doc.text("LAPORAN PEMBEKALAN PRAKTIK KERJA LAPANGAN", pageWidth/2, y, {align:'center'}); y += 24;
+
+        // Metadata
         const labelX = margin;
         const colonX = margin + 90;
         const valueX = margin + 100;
-        doc.setFont('helvetica','normal').setFontSize(11);
-        const addMeta = (label, value) => { doc.text(label, labelX, y); doc.text(':', colonX, y); doc.text(value, valueX, y); y += 16; };
+        doc.setFont(font,'normal').setFontSize(11);
+        const addMeta = (label, value) => {
+          doc.text(label, labelX, y);
+          doc.text(':', colonX, y);
+          doc.text(value, valueX, y);
+          y += 16;
+        };
         addMeta('Hari/Tanggal', formatDisplayDate(tglEl.value));
         addMeta('Sesi', sesiVal);
         addMeta('Ruang / Jam', `${ruangVal} (Jam ${jamVal})`);
         addMeta('Instruktur', instrukturVal);
+        addMeta('Kelompok', kelompokVal);
         y += 4;
+
+        // Tabel Topik, Metode, Absensi
         doc.autoTable({
           startY: y,
           margin: { left: margin, right: margin },
           theme: 'plain',
           styles: { fontSize: 11, cellPadding: 5, textColor: [0,0,0] },
           columnStyles: { 0: { cellWidth: 90, fontStyle: 'bold' }, 1: { cellWidth: pageWidth - margin*2 - 90 } },
-          body: [[{ content: 'Topik' }, { content: topikVal }], [{ content: 'Metode' }, { content: metodeStr }], [{ content: 'Absensi' }, { content: `Hadir: ${counts.hadir}   Sakit: ${counts.sakit}\nIzin: ${counts.izin}   Alfa: ${counts.alfa}` }]]
+          body: [
+            [{ content: 'Topik' }, { content: topikVal }],
+            [{ content: 'Metode' }, { content: metodeStr }],
+            [{ content: 'Absensi' }, { content: `Hadir: ${counts.hadir}   Sakit: ${counts.sakit}\nIzin: ${counts.izin}   Alfa: ${counts.alfa}` }]
+          ]
         });
         y = doc.lastAutoTable.finalY + 16;
+
+        // Daftar tidak hadir
         const tidakHadir = students.filter(s => s.status !== 0);
         if (tidakHadir.length > 0) {
-          if (y + 30 + tidakHadir.length*20 > doc.internal.pageSize.getHeight() - 100) { doc.addPage(); y = 60; }
-          doc.setFont('helvetica','bold').setFontSize(11);
+          if (y + 30 + tidakHadir.length*20 > pageHeight - 100) { doc.addPage(); y = 60; }
+          doc.setFont(font, 'bold',).setFontSize(11);
           doc.text("Daftar Peserta Tidak Hadir:", margin, y); y += 14;
-          const tableData = tidakHadir.map(s => [s.name, STATUS_LABEL[s.status], s.group]);
+          const tableData = tidakHadir.map(s => [s.name, STATUS_LABEL[s.status]]);
           doc.autoTable({
             startY: y,
             margin: { left: margin, right: margin },
-            head: [['Nama', 'Status', 'Kelompok']],
+            head: [['Nama', 'Status']],
             body: tableData,
             theme: 'grid',
             styles: { fontSize: 10, cellPadding: 4, textColor: [0,0,0] },
             headStyles: { fillColor: [40,40,40], textColor: [255,255,255], fontStyle: 'bold' },
-            columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 60 }, 2: { cellWidth: 70 } }
+            columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 80 } }
           });
           y = doc.lastAutoTable.finalY + 16;
         } else {
-          doc.setFont('helvetica','normal').setFontSize(11);
+          doc.setFont(font, 'normal').setFontSize(11);
           doc.text("Semua peserta hadir.", margin, y); y += 16;
         }
+
+        // Uraian Kegiatan
         const maxWidth = pageWidth - margin*2;
         let lines = doc.splitTextToSize(uraianStr, maxWidth - 100);
         while (lines.length < 8) lines.push('');
@@ -504,46 +544,54 @@
           body: [[{ content: 'Uraian Kegiatan' }, { content: paddedUraian }]]
         });
         y = doc.lastAutoTable.finalY + 16;
+
+        // Gear opsional
         const gearLines = [];
         if (cameraStr) gearLines.push(`Kamera & Drone: ${cameraStr}`);
         if (lightingStr) gearLines.push(`Lighting: ${lightingStr}`);
         if (gearTambahan) gearLines.push(`Gear Tambahan: ${gearTambahan}`);
         if (gearLines.length > 0) {
-          if (y + gearLines.length*12 > doc.internal.pageSize.getHeight() - 100) { doc.addPage(); y = 60; }
-          doc.setFont('helvetica','italic').setFontSize(9);
+          if (y + gearLines.length*12 > pageHeight - 100) { doc.addPage(); y = 60; }
+          doc.setFont(font, 'italic').setFontSize(9);
           gearLines.forEach(line => { doc.text(line, margin, y); y += 12; });
           y += 4;
         }
-        if (y + 80 > doc.internal.pageSize.getHeight() - 70) { doc.addPage(); y = 60; }
+
+        // Tanda tangan
+        if (y + 80 > pageHeight - 70) { doc.addPage(); y = 60; }
         const leftSigX = margin + 40;
         const rightSigX = pageWidth - 220;
-        doc.setFontSize(10).setFont('helvetica', 'normal');
+        doc.setFontSize(10).setFont(font, 'normal');
         doc.text("Instruktur/Pemateri,", leftSigX, y);
         doc.text("Guru Pembimbing,", rightSigX, y);
         y += 50;
-        doc.setFont('helvetica','bold');
+        doc.setFont(font, 'bold');
         doc.text(instrukturVal, leftSigX, y);
         doc.text("Fransiskus Kia Ose", rightSigX, y);
         doc.setLineWidth(0.5);
         doc.line(leftSigX, y+4, leftSigX + doc.getTextWidth(instrukturVal), y+4);
         doc.line(rightSigX, y+4, rightSigX + doc.getTextWidth("Fransiskus Kia Ose"), y+4);
+
         const safeName = `Laporan_PKL_Sesi${sesiVal}_${tglEl.value.replace(/-/g,'')}.pdf`;
-        try { if (/Android/i.test(navigator.userAgent)) doc.output('dataurlnewwindow'); else doc.save(safeName); } catch (e) { doc.output('dataurlnewwindow'); }
+        try {
+          if (/Android/i.test(navigator.userAgent)) { doc.output('dataurlnewwindow'); }
+          else { doc.save(safeName); }
+        } catch (e) { doc.output('dataurlnewwindow'); }
       }
 
+      // Preview & events
       saveBtn.addEventListener('click', saveCurrentSession);
       generateBtn.addEventListener('click', ()=>{ if(!tglEl.value) alert('Isi tanggal dahulu.'); else generatePDF(); });
       previewBtn.addEventListener('click', ()=>{
         const counts = updateCounts();
-        alert(`Preview Sesi ${sesiEl.value||'-'}:\nTanggal: ${tglEl.value}\nTopik: ${topikEl.value}\nInstruktur: ${instrukturEl.value}\nMetode: ${Array.from(selectedMethods).join(', ')||'-'}\nKompetensi: ${Array.from(selectedProfiles).join(', ')||'-'}\nKamera: ${Array.from(selectedCameras).join(', ')||'-'}\nLighting: ${Array.from(selectedLightings).join(', ')||'-'}\nGear Tambahan: ${gearEl.value||'-'}\nUraian: ${uraianEl.value||'-'}\nKehadiran: H:${counts.hadir} S:${counts.sakit} I:${counts.izin} A:${counts.alfa}`);
+        alert(`Preview Sesi ${sesiEl.value||'-'}:\nTanggal: ${tglEl.value}\nKelompok: ${kelompokEl.value||'-'}\nTopik: ${topikEl.value}\nInstruktur: ${instrukturEl.value}\nMetode: ${Array.from(selectedMethods).join(', ')||'-'}\nKompetensi: ${Array.from(selectedProfiles).join(', ')||'-'}\nKamera: ${Array.from(selectedCameras).join(', ')||'-'}\nLighting: ${Array.from(selectedLightings).join(', ')||'-'}\nGear Tambahan: ${gearEl.value||'-'}\nUraian: ${uraianEl.value||'-'}\nKehadiran: H:${counts.hadir} S:${counts.sakit} I:${counts.izin} A:${counts.alfa}`);
       });
 
-      // INIT
+      // Init
       renderTopikDropdown();
       renderIndicatorChips();
-      initStudentsFromMaster();
-      renderStudents();
-      renderHistory();
+      // Awal: kosong (tidak ada kelompok terpilih)
+      setStudentsByKelompok('');
     })();
   </script>
 </body>
