@@ -56,18 +56,11 @@
 
     <!-- SECTION A: Metadata -->
     <section class="glass p-4 rounded-xl mb-6">
-      <h2 class="font-semibold mb-3">A. Metadata Sesi</h2>
+      <h2 class="font-semibold mb-3">A. Metadata Pembekalan</h2>
       <div class="grid gap-3 meta-grid">
         <div>
           <label class="text-xs text-gray-300">Tanggal</label>
           <input id="tgl" type="date" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" />
-        </div>
-        <div>
-          <label class="text-xs text-gray-300">Sesi ke‑</label>
-          <select id="sesi" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
-            <option value="">-- Pilih --</option>
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-          </select>
         </div>
         <div>
           <label class="text-xs text-gray-300">Jam Ke‑</label>
@@ -93,7 +86,6 @@
             <option>Agustinus Sanga Wuen</option>
           </select>
         </div>
-        <!-- Dropdown Kelompok dengan SEMUA -->
         <div>
           <label class="text-xs text-gray-300">Kelompok</label>
           <select id="kelompok" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
@@ -104,7 +96,7 @@
             <option>SEMUA</option>
           </select>
         </div>
-        <div class="col-span-full md:col-span-2">
+        <div class="col-span-full md:col-span-1">
           <label class="text-xs text-gray-300">Topik / Materi</label>
           <select id="topik" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white">
             <!-- diisi JS -->
@@ -140,32 +132,31 @@
       <label class="text-xs text-gray-300">Uraian / Catatan Pembelajaran</label>
       <textarea id="uraian" rows="5" class="w-full mt-1 px-3 py-2 rounded-md bg-transparent border border-white/8 text-white" placeholder="Tuliskan ringkasan materi, aktivitas, dan observasi..."></textarea>
       <div class="mt-4 flex gap-3 flex-wrap">
-        <button id="saveSession" class="px-4 py-3 rounded-lg border border-white/10 text-white">💾 Simpan Sesi</button>
+        <button id="saveSession" class="px-4 py-3 rounded-lg border border-white/10 text-white">💾 Simpan Data</button>
         <button id="generatePdf" class="flex-1 py-3 rounded-lg bg-amber-400 text-black font-semibold shadow-lg hover:scale-[1.01]">📄 Generate PDF</button>
         <button id="btnPreview" class="px-4 py-3 rounded-lg border border-white/10 text-white">🔍 Preview</button>
         <button id="exportCsv" class="px-4 py-3 rounded-lg bg-green-600 text-white font-semibold shadow-lg hover:scale-[1.01]">📥 Ekspor CSV</button>
       </div>
     </section>
 
-    <!-- SECTION E: Riwayat Sesi -->
+    <!-- SECTION E: Riwayat Data -->
     <section class="glass p-4 rounded-xl mb-6">
-      <h2 class="font-semibold mb-3">E. Riwayat Sesi Tersimpan</h2>
+      <h2 class="font-semibold mb-3">E. Riwayat Data Tersimpan</h2>
       <div id="historyList" class="text-sm text-gray-200 space-y-2"></div>
     </section>
 
-    <footer class="text-center text-xs text-gray-400 mt-6">SMK NEGERI ILE BOLENG — Jurnal Pembekalan PKL (Tata Kamera & Tata Cahaya)</footer>
+    <footer class="text-center text-xs text-gray-400 mt-6 pb-6">SMK NEGERI ILE BOLENG — Jurnal Pembekalan PKL (Tata Kamera & Tata Cahaya)</footer>
   </main>
 
   <script>
     (function() {
-      // Konfigurasi
+      // Konfigurasi Materi Baru
       const TOPIK_SESI = [
-        "Sesi 1: Pembekalan Umum (K3, Etika, Komunikasi)",
-        "Sesi 2: Dasar Operasi Kamera DSLR/Mirrorless",
-        "Sesi 3: Penyusunan Laporan PKL",
-        "Sesi 4: Operasi Kamera Video & Komposisi",
-        "Sesi 5: Teknik Pergerakan Kamera & Stabilisasi",
-        "Sesi 6: Tata Cahaya Dasar & Kontrol Warna"
+        "Softskill & Etika Dunia Kerja",
+        "Teknik Penulisan Laporan",
+        "Pra Produksi",
+        "Produksi",
+        "Pasca Produksi"
       ];
       const METHODS = ["Ceramah interaktif","Simulasi kasus","Roleplay","Workshop","Diskusi kelompok","Studi lapangan"];
       const PROFILES = ["Pemahaman K3","Disiplin waktu","Kerjasama Tim","Problem‑solving","Komunikasi profesional","Etika kerja"];
@@ -206,7 +197,6 @@
 
       // DOM
       const tglEl = document.getElementById('tgl');
-      const sesiEl = document.getElementById('sesi');
       const jamEl = document.getElementById('jam');
       const ruangEl = document.getElementById('ruang');
       const instrukturEl = document.getElementById('instruktur');
@@ -328,9 +318,9 @@
 
       // Riwayat
       function saveCurrentSession() {
-        if(!tglEl.value || !sesiEl.value){ alert('Isi tanggal dan sesi.'); return; }
+        if(!tglEl.value){ alert('Isi tanggal kegiatan.'); return; }
         const session = {
-          tgl: tglEl.value, sesi: sesiEl.value, topik: topikEl.value, jam: jamEl.value, ruang: ruangEl.value,
+          tgl: tglEl.value, topik: topikEl.value, jam: jamEl.value, ruang: ruangEl.value,
           instruktur: instrukturEl.value, kelompok: kelompokEl.value,
           metode: Array.from(selectedMethods), profil: Array.from(selectedProfiles),
           cameras: Array.from(selectedCameras), lightings: Array.from(selectedLightings),
@@ -338,16 +328,17 @@
           gear: gearEl.value, uraian: uraianEl.value
         };
         let sessions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-        const idx = sessions.findIndex(s=>s.tgl===session.tgl && s.sesi===session.sesi);
+        // Pengecekan unik berdasarkan tanggal & topik (bukan sesi lagi)
+        const idx = sessions.findIndex(s=>s.tgl===session.tgl && s.topik===session.topik);
         if(idx>=0) sessions[idx]=session; else sessions.push(session);
         localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
-        renderHistory(); alert('Sesi tersimpan.');
+        renderHistory(); alert('Data tersimpan.');
       }
 
       function loadSessions(){ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
 
       function loadSessionToForm(session) {
-        tglEl.value = session.tgl||''; sesiEl.value = session.sesi||''; topikEl.value = session.topik||'';
+        tglEl.value = session.tgl||''; topikEl.value = session.topik||'';
         jamEl.value = session.jam||''; ruangEl.value = session.ruang||'';
         instrukturEl.value = session.instruktur||'';
         kelompokEl.value = session.kelompok||'';
@@ -369,7 +360,6 @@
         highlight(selectedCameras, chipsCamera, 'bg-purple-600/80');
         highlight(selectedLightings, chipsLighting, 'bg-yellow-600/80');
 
-        // Set students dari data sesi (bukan dari KELOMPOK_DATA)
         if(session.students && session.students.length) {
           students = session.students.map(s=>({name:s.name, status:s.status}));
         } else {
@@ -383,12 +373,12 @@
 
       function renderHistory() {
         const sessions = loadSessions();
-        if(!sessions.length){ historyDiv.innerHTML='<p class="text-gray-400">Belum ada sesi tersimpan.</p>'; return; }
+        if(!sessions.length){ historyDiv.innerHTML='<p class="text-gray-400">Belum ada data tersimpan.</p>'; return; }
         let html='<ul class="space-y-1">';
         sessions.forEach((s,i)=>{
           const dateStr = new Date(s.tgl+'T00:00:00').toLocaleDateString('id-ID',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
           html += `<li class="flex items-center justify-between bg-white/5 p-2 rounded">
-            <span><strong>${dateStr}</strong> - Sesi ${s.sesi}: ${s.topik||'-'} (${s.kelompok||'-'})</span>
+            <span><strong>${dateStr}</strong> - ${s.topik||'-'} (${s.kelompok||'-'})</span>
             <span class="flex gap-2">
               <button class="text-xs px-2 py-1 bg-white/10 rounded load-session" data-index="${i}">Muat</button>
               <button class="text-xs px-2 py-1 bg-white/10 rounded print-session" data-index="${i}">Cetak</button>
@@ -399,7 +389,7 @@
         html+='</ul>'; historyDiv.innerHTML=html;
         historyDiv.querySelectorAll('.load-session').forEach(b=>b.addEventListener('click',e=>{const i=parseInt(e.target.dataset.index); const s=loadSessions(); if(s[i])loadSessionToForm(s[i]); }));
         historyDiv.querySelectorAll('.print-session').forEach(b=>b.addEventListener('click',e=>{const i=parseInt(e.target.dataset.index); const s=loadSessions(); if(s[i]){loadSessionToForm(s[i]); generatePDF(); }}));
-        historyDiv.querySelectorAll('.delete-session').forEach(b=>b.addEventListener('click',e=>{if(!confirm('Hapus sesi ini?'))return; const i=parseInt(e.target.dataset.index); let s=loadSessions(); s.splice(i,1); localStorage.setItem(STORAGE_KEY,JSON.stringify(s)); renderHistory(); }));
+        historyDiv.querySelectorAll('.delete-session').forEach(b=>b.addEventListener('click',e=>{if(!confirm('Hapus data ini?'))return; const i=parseInt(e.target.dataset.index); let s=loadSessions(); s.splice(i,1); localStorage.setItem(STORAGE_KEY,JSON.stringify(s)); renderHistory(); }));
       }
 
       // Ekspor CSV
@@ -410,13 +400,13 @@
           if(raw) sessions = JSON.parse(raw);
           if(!Array.isArray(sessions)) sessions = [];
         } catch(e) { alert('Gagal membaca data.'); return; }
-        if(!sessions.length){ alert('Belum ada sesi tersimpan.'); return; }
+        if(!sessions.length){ alert('Belum ada data tersimpan.'); return; }
 
-        const headers = ['Tanggal','Sesi','Topik','Jam','Ruang','Instruktur','Kelompok','Metode','Kompetensi','Kamera','Lighting','Gear Tambahan','Uraian','Hadir','Sakit','Izin','Alfa'];
+        const headers = ['Tanggal','Topik','Jam','Ruang','Instruktur','Kelompok','Metode','Kompetensi','Kamera','Lighting','Gear Tambahan','Uraian','Hadir','Sakit','Izin','Alfa'];
         const rows = sessions.map(s => {
           const cnt = {hadir:0,sakit:0,izin:0,alfa:0};
           if(s.students) s.students.forEach(st=>{ if(st.status===0)cnt.hadir++; else if(st.status===1)cnt.sakit++; else if(st.status===2)cnt.izin++; else if(st.status===3)cnt.alfa++; });
-          return [s.tgl||'', s.sesi||'', s.topik||'', s.jam||'', s.ruang||'', s.instruktur||'', s.kelompok||'', (s.metode||[]).join('; '), (s.profil||[]).join('; '), (s.cameras||[]).join('; '), (s.lightings||[]).join('; '), s.gear||'', s.uraian||'', cnt.hadir, cnt.sakit, cnt.izin, cnt.alfa];
+          return [s.tgl||'', s.topik||'', s.jam||'', s.ruang||'', s.instruktur||'', s.kelompok||'', (s.metode||[]).join('; '), (s.profil||[]).join('; '), (s.cameras||[]).join('; '), (s.lightings||[]).join('; '), s.gear||'', s.uraian||'', cnt.hadir, cnt.sakit, cnt.izin, cnt.alfa];
         });
         const escapeCSV = v => { if(v===null||v===undefined)return''; v=String(v); if(v.includes(',')||v.includes('"')||v.includes('\n')) return '"'+v.replace(/"/g,'""')+'"'; return v; };
         const csv = '\uFEFF' + [headers.join(','), ...rows.map(r=>r.map(escapeCSV).join(','))].join('\n');
@@ -440,7 +430,6 @@
       function generatePDF() {
         if(!tglEl.value){ alert('Tanggal wajib diisi.'); return; }
 
-        const sesiVal = sesiEl.value || '-';
         const topikVal = topikEl.value || '-';
         const instrukturVal = instrukturEl.value || '___________';
         const jamVal = jamEl.value || '-';
@@ -489,7 +478,6 @@
           y += 16;
         };
         addMeta('Hari/Tanggal', formatDisplayDate(tglEl.value));
-        addMeta('Sesi', sesiVal);
         addMeta('Ruang / Jam', `${ruangVal} (Jam ${jamVal})`);
         addMeta('Instruktur', instrukturVal);
         addMeta('Kelompok', kelompokVal);
@@ -514,7 +502,7 @@
         const tidakHadir = students.filter(s => s.status !== 0);
         if (tidakHadir.length > 0) {
           if (y + 30 + tidakHadir.length*20 > pageHeight - 100) { doc.addPage(); y = 60; }
-          doc.setFont(font, 'bold',).setFontSize(11);
+          doc.setFont(font, 'bold').setFontSize(11);
           doc.text("Daftar Peserta Tidak Hadir:", margin, y); y += 14;
           const tableData = tidakHadir.map(s => [s.name, STATUS_LABEL[s.status]]);
           doc.autoTable({
@@ -575,7 +563,9 @@
         doc.line(leftSigX, y+4, leftSigX + doc.getTextWidth(instrukturVal), y+4);
         doc.line(rightSigX, y+4, rightSigX + doc.getTextWidth("Fransiskus Kia Ose"), y+4);
 
-        const safeName = `Laporan_PKL_Sesi${sesiVal}_${tglEl.value.replace(/-/g,'')}.pdf`;
+        // Bersihkan string dari spasi / karakter aneh agar aman jadi nama file
+        const cleanTopik = topikVal.replace(/[^a-zA-Z0-9]/g, '_');
+        const safeName = `Laporan_PKL_${cleanTopik}_${tglEl.value.replace(/-/g,'')}.pdf`;
         try {
           if (/Android/i.test(navigator.userAgent)) { doc.output('dataurlnewwindow'); }
           else { doc.save(safeName); }
@@ -587,7 +577,7 @@
       generateBtn.addEventListener('click', ()=>{ if(!tglEl.value) alert('Isi tanggal dahulu.'); else generatePDF(); });
       previewBtn.addEventListener('click', ()=>{
         const counts = updateCounts();
-        alert(`Preview Sesi ${sesiEl.value||'-'}:\nTanggal: ${tglEl.value}\nKelompok: ${kelompokEl.value||'-'}\nTopik: ${topikEl.value}\nInstruktur: ${instrukturEl.value}\nMetode: ${Array.from(selectedMethods).join(', ')||'-'}\nKompetensi: ${Array.from(selectedProfiles).join(', ')||'-'}\nKamera: ${Array.from(selectedCameras).join(', ')||'-'}\nLighting: ${Array.from(selectedLightings).join(', ')||'-'}\nGear Tambahan: ${gearEl.value||'-'}\nUraian: ${uraianEl.value||'-'}\nKehadiran: H:${counts.hadir} S:${counts.sakit} I:${counts.izin} A:${counts.alfa}`);
+        alert(`Preview Data Kegiatan:\nTanggal: ${tglEl.value}\nKelompok: ${kelompokEl.value||'-'}\nTopik: ${topikEl.value}\nInstruktur: ${instrukturEl.value}\nMetode: ${Array.from(selectedMethods).join(', ')||'-'}\nKompetensi: ${Array.from(selectedProfiles).join(', ')||'-'}\nKamera: ${Array.from(selectedCameras).join(', ')||'-'}\nLighting: ${Array.from(selectedLightings).join(', ')||'-'}\nGear Tambahan: ${gearEl.value||'-'}\nUraian: ${uraianEl.value||'-'}\nKehadiran: H:${counts.hadir} S:${counts.sakit} I:${counts.izin} A:${counts.alfa}`);
       });
 
       // Init
